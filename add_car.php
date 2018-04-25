@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<script src="js/bootstrap.min.js"></script>
+
+	<title>ระบบจองรถ</title>
+
+	<style type="text/css">
+		nav {
+			border-bottom: 3px solid;
+      		border-image: linear-gradient(to right, #1565C0 0%, #64B5F6 100%);
+      		border-image-slice: 1; 
+			box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 2px 15px 0 rgba(0, 0, 0, 0.19);
+		}
+		footer {
+	      margin-top: 25px;
+	      background-image: linear-gradient(-20deg, #1565C0 0%, #64B5F6 100%);
+	      height: 100%;
+	      width: 100%;
+	      color: white;
+	      text-align: center;
+	      padding: 20px;
+	    }
+			.img-responsive {
+        display: block;
+        max-width: 60%;
+        height: auto;
+      }
+	</style>
+</head>
+
+<!--Navbar-->
+	<nav class="navbar navbar-expand-md bg-white navbar-light">
+	  <!-- Brand -->
+	  <div class="container-fluid">
+		  <a class="navbar-brand mx-auto" href="#">
+		  	<img style="width: 12%;" src="img/logo-khonkaen.png">
+		  	<span style="font-size: 20px; font-weight: bold; color: #1E88E5;">เทศบาลขอนแก่น</span>
+		  </a>
+
+		  <!-- Toggler/collapsibe Button -->
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+
+		  <!-- Navbar links -->
+		  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+		  	<ul class="navbar-nav mr-auto mt-2 mt-md-0"></ul>
+		    <ul class="navbar-nav">
+		    	<li class="nav-item">
+		        <a class="nav-link" href="add_user.php"><i class="fas fa-car mr-2" aria-hidden="true"></i>สร้างบัญชีผู้ใช้</a>
+		      </li>
+		    	<li class="nav-item">
+		        <a class="nav-link" href="add_car.php"><i class="fas fa-reply-all mr-2" aria-hidden="true"></i>จัดการข้อมูลรถ</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#"><i class="fas fa-check-circle mr-2" aria-hidden="true"></i>รายละเอียดการจอง</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#"><i class="fas fa-user-circle mr-2" aria-hidden="true"></i>รายงานการจองรถ</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#"><i class="fas fa-user-circle mr-2" aria-hidden="true"></i>อนุมัติการจอง</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#"><i class="fas fa-sign-out mr-2" aria-hidden="true"></i>ออกจากระบบ</a>
+		      </li> 
+		    </ul>
+		  </div>
+		</div> 
+	</nav>
+
+	<img class="img-fluid w-100" alt="Responsive image" src="img/header.png">
+
+	<div class="container">
+		<div style="height:50px;"></div>
+		<div class="well" style="margin:auto; padding:auto; width:100%;">
+		<span style="font-size:25px; color:blue"><center><strong>จัดการข้อมูลรถ</strong></center></span>	
+			<span class="pull-left"><a href="#addnew" data-toggle="modal" class="btn btn-primary"><span class="oi oi-plus"></span> เพิ่มข้อมูล</a></span>
+			<div style="height:50px;"></div>
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+				<th width="200px">รูปรถ</th>
+					<th>ป้ายทะเบียน</th>
+					<th>ชื่อ-นามสกุล (คนขับ)</th>
+					<th>หน่วยงาน</th>
+					<th>ประเภทรถ</th>
+					<th width="150px">Action</th>
+				</thead>
+				<tbody>
+				<?php
+					include('conn.php');
+					
+					$query=mysqli_query($conn,"select * from car");
+					while($row=mysqli_fetch_array($query)){
+						?>
+						<tr>
+							<td><img class="img-responsive img-thumbnail" src="<?php echo $row['car_image']; ?>" /></td>
+							<td><?php echo $row['car_plate']; ?></td>
+							<td><?php echo $row['driver']; ?></td>
+							<td><?php echo $row['company']; ?></td>
+							<td><?php echo $row['car_type']; ?></td>
+							<td>
+								<a href="#edit<?php echo $row['car_id']; ?>" data-toggle="modal" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> แก้ไข</a> || 
+								<a href="#del<?php echo $row['car_id']; ?>" data-toggle="modal" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span> ลบ</a>
+								<?php include('button_car.php'); ?>
+							</td>
+						</tr>
+						<?php
+					}
+				
+				?>
+				</tbody>
+			</table>
+		</div>
+		<?php include('add_modal_car.php'); ?>
+	</div>
+
+	<footer>
+	  <span style="font-style: italic;font-size: 20px;">ระบบ</span> 
+	  <span style="font-weight: bold;font-size: 20px;">จองรถ</span>
+	  <hr style="width: 150px;background-color: white;">
+	  <div style="line-height: 5px;margin-top: 30px;">
+	    <p>Copyright &copy; 2018</p>
+	    <p style="margin-bottom: 20px;">by Team Enter</p>
+	  </div>
+	</footer>
+
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</body>
+</html>
