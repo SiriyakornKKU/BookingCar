@@ -79,6 +79,15 @@
 						</div>
 					</div>
 					<div style="height:10px;"></div>	
+					<div class="row">
+						<div class="col-lg-3">
+							<label class="control-label" style="position:relative; top:7px;">รูปรถ:</label>
+						</div>
+						<div class="col-lg-9">
+							<input type="file" name="image" id="image" accept="image/*">
+						</div>
+					</div>
+					<div style="height:10px;"></div>
                 </div> 
 				</div>
                 <div class="modal-footer">
